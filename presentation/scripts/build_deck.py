@@ -15,8 +15,12 @@ WHITE   = RGBColor(0xFF,0xFF,0xFF)
 GREY    = RGBColor(0x5B,0x60,0x70)
 GREEN   = RGBColor(0x2E,0x7D,0x5B)
 FONT    = "Inter"
-B = "/tmp/claude-0/-home-user-alleanzaacademy/147edd4c-26bd-5fd6-a68b-8407a942b324/scratchpad/"
-LOGO_C, LOGO_W = B+"alleanza_logo.png", B+"alleanza_logo_white.png"
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # carpeta presentation/
+ASSETS = os.path.join(ROOT, "assets")
+B = ROOT + os.sep
+LOGO_C = os.path.join(ASSETS, "alleanza_logo.png")
+LOGO_W = os.path.join(ASSETS, "alleanza_logo_white.png")
 
 prs = Presentation()
 prs.slide_width=Inches(13.333); prs.slide_height=Inches(7.5)
@@ -41,7 +45,8 @@ def txt(s,x,y,w,h,runs,align=PP_ALIGN.LEFT,anchor=MSO_ANCHOR.TOP,sa=6,ls=1.05):
             if r: run.font.italic=r[0]
     return tb
 def logo(s,dark=False):
-    s.shapes.add_picture(LOGO_W if dark else LOGO_C, Inches(11.15), Inches(0.42), height=Inches(0.52))
+    pic=s.shapes.add_picture(LOGO_W if dark else LOGO_C, 0, Inches(0.42), height=Inches(0.48))
+    pic.left = SW - pic.width - Inches(0.55)
 def accent(s): rect(s,0,0,Inches(0.18),SH,PURPLE)
 def kicker(s,t,c=PURPLE): txt(s,Inches(0.9),Inches(0.62),Inches(8),Inches(0.4),[[(t.upper(),13,c,True)]])
 def title(s,t,c=NAVY,y=1.0,size=31): txt(s,Inches(0.9),Inches(y),Inches(10),Inches(1.0),[[(t,size,c,True)]],ls=1.0)
